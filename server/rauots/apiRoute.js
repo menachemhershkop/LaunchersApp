@@ -16,12 +16,20 @@ apiRoute.post('/launchers',async (req, res)=>{
     }
     else{
         const resuilt  = await db.then(data=> data.insertOne({id:id,city:city,rocketType:rocketType,latitude:latitude,longitude:longitude,name:name}))
-        console.log(resuilt.insertedId);
-        
+        res.status(201).json({msg:resuilt.insertedId})
     }
 })
-apiRoute.get('/launchers/:id', (req, res)=>{
+apiRoute.get('/launchers/:id',async (req, res)=>{
+    const param = req.params.id
+
     
+    const finder = await db.then(data=> data.find({id:param}).toArray())
+    if (finder.length === 0){
+        res.status(404).json({msg:'id not found'})
+    }
+    else{
+        res.status(200).json({masger:finder})
+    }
 })
 apiRoute.delete('/launchers:id', (req, res)=>{
     
