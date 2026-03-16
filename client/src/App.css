@@ -1,7 +1,26 @@
+body{
+    background: #596b6634;
+    color: black;
+}
+input{
+    border-radius: 400px;
+    height: 2em;
+}
+button{
+    border-radius: 80px;
+}
+select{
+    border-radius: 400px;
+    height: 2em;
+}
 .new-rocket{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    border-style: inherit;
+    width: min-content;
+    justify-self: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 table{
     width: 90%;
@@ -29,4 +48,14 @@ tr:nth-child(even){
     flex-direction: column;
     align-self: center;
     width: max-content;
+}
+.seccess{
+    color: green;
+    justify-self: center;
+    font-size: xx-large;
+}
+.worng{
+    color: green;
+    justify-self: center;
+    font-size: xx-large;
 }
