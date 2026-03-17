@@ -10,12 +10,17 @@ export const authRoute = express();
 const db = run().then((data) => data.collection('users'))
 const secret = process.env.SECRET
 
-authRoute.post('/register/create', authToken, adminConnect, async (req, res) => {
-    
+authRoute.post('/register/create',authToken, adminConnect, async (req, res) => {
     const {id, username, password, email, user_type, } = req.body
-    if (!username, !password, !email, !user_type) {
+   
+    if (!username, !password, !email, !user_type) {     
         return res.status(401).json({ msg: 'Imported filed less' })
     }
+    const finder = await db.then((data)=>data.find({username:username}).toArray())
+    
+    if (finder.length >=1){
+       return res.status(401).json({msg:'username already exist'})
+    } 
     const create = await db.then((data) => data.insertOne(new User(id, username, password, email, user_type)))
     res.status(201).json({user:create.insertedId})
 })
@@ -68,4 +73,8 @@ authRoute.post('/login', async (req, res) => {
 authRoute.get('/getUser', authToken, (req, res) => {
  
         return res.status(200).json(req.user['agent'][0])
+})
+
+authRoute.get('/users', authToken, adminConnect, async (req,res)=>{
+    res.send(await db.then(data=>data.find({}).toArray()))
 })

@@ -75,3 +75,11 @@ tr:nth-child(even){
 .lancher-tab p{
     font-size: 20px;
 }
+.new-agent{
+    display: flex;
+    flex-direction: column;
+    width: min-content;
+    gap: 2px;
+    margin: 2px;
+    justify-self: center;
+}

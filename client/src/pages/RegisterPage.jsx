@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router';
+import axios from 'axios';
 
 function RegisterPage() {
     const [name, setName]= useState('');
@@ -6,14 +8,32 @@ function RegisterPage() {
         const [password, setPassword] =useState('');
         const [email, setEmail]= useState('');
         const [response, setResponseMessage] = useState('')
+        const navigate = useNavigate();
+     const handelSubmit = async (e)=>{
+            e.preventDefault();
+            axios.post('http://localhost:3000/api/auth/register/create', {username:name, password:password, email:email, user_type:userType})
+            .then((response)=>{
+                console.log(response);
+                
+                setResponseMessage(<div className='seccess'>New User added...</div>)
+                setTimeout(()=>{
+                    navigate('/')
+                },5000)
+            }).catch((err)=>{
+                console.log(err)
+                setResponseMessage(<div className='worng'>Username already exist</div>)
+            }
+            )
+    }
+
   return (
     <div>
-      <form className='new-agent' action="" >
+      <form className='new-agent' action="" onSubmit={handelSubmit} >
             <label htmlFor="name">Name:
         <input required id="name" type="text" onChange={(e)=>setName(e.target.value)}/>
         </label>
         <label htmlFor="password">Password
-        <input required id="password" type="text" onChange={(e)=>setPassword(e.target.value)}/>
+        <input required id="password" type="password" onChange={(e)=>setPassword(e.target.value)}/>
         </label>
         <label htmlFor="email"> Email:
         <input required id='email' type="email" onChange={(e)=>setEmail(e.target.value)}/>
@@ -28,6 +48,7 @@ function RegisterPage() {
         </label>
         <button>Submit</button>
       </form>
+      {response}
     </div>
   )
 }
