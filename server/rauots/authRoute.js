@@ -1,9 +1,12 @@
 import express from 'express';
 import run from '../db/connect.js';
 import { User } from '../modules/userModel.js';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config'
 
 export const authRoute = express();
 const db = run().then((data) => data.collection('users'))
+const secret = process.env.SECRET
 
 authRoute.post('/register/create', async (req, res) => {
     const {id, username, password, email, user_type, } = req.body
@@ -39,7 +42,20 @@ authRoute.delete('/register/delete/:id', async (req, res) => {
     }
 })
 
-authRoute.post('/login', (req, res) => {
+authRoute.post('/login', async (req, res) => {
+    
+    const {username, password} = req.body;
+    if (!username || !password){
+        res.status(400).json({message: "username and password are required"})
+    }
+    const agent = await db.then(data => data.find({ username: username ,password:password}).toArray())
+    if (agent.length === 0){
+       return res.status(401).json({ message: "Invalid credentials" });
+    }
+    const paylod={agent:agent}
+    const token = jwt.sign(paylod, secret, {expiresIn:'15m'})
+    res.status(200).json({token})
+
 
 })
 
