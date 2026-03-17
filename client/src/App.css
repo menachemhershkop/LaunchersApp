@@ -61,7 +61,7 @@ tr:nth-child(even){
     font-size: xx-large;
 }
 .worng{
-    color: green;
+    color: red;
     justify-self: center;
     font-size: xx-large;
 }

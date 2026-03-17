@@ -42,7 +42,7 @@ function LauncherDetailsPage() {
           
   return (
     <div>
-      <button onClick={()=>navigate('/')}>Back HomePage</button>
+
        <Table name={launcher.name} rocketType={launcher.rocketType} latitude={launcher.latitude} longitude={launcher.longitude} city={launcher.city}/>
        <button onClick={()=>deleted()}>unable</button>
         <button onClick={()=>setUpdate(!update)}>Update</button>
