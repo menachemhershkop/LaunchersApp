@@ -54,11 +54,12 @@ authRoute.post('/login', async (req, res) => {
     }
     const paylod={agent:agent}
     const token = jwt.sign(paylod, secret, {expiresIn:'15m'})
-    res.status(200).json({token})
+    res.status(200).json({token, agent})
 
 
 })
 
-authRoute.get('/getUser', (res, req) => {
-
+authRoute.get('/getUser', (req, res) => {
+        const {username, email, user_type, lest_login} = req.body;
+        return res.status(200).json({user_type,username, email, lest_login})
 })
