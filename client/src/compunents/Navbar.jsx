@@ -43,7 +43,7 @@ function Navbar({children}) {
       {token && <button onClick={()=>{localStorage.clear();navigate('/')}}>Log out</button>}
       <button onClick={whoami}>Who am i</button>
         <Link to={'/'}><button>HomePage</button></Link>
-        {(rank == 'admin' ||rank == 'Air Force') &&<Link to={'/AddLauncher'}><button>Add Launcher</button></Link>}
+        {(rank == 'admin' ||rank == 'Intelligence Corps') &&<Link to={'/AddLauncher'}><button>Add Launcher</button></Link>}
         {rank == 'admin' && <><Link to={'/RegisterPage'}><button>register</button></Link>
 <Link to={'/UserList'}><button>User List</button></Link></>}
       <main>{children}</main>
